@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter map reduce</title>
+</head>
+<body>
+    <script>
+
+        var arr = [5, 'orange', [2], 'hello', 43];
+        
+        // filter 
+        // не знаю, как корректно сообщить, что такое i =(
+        
+        var i;
+
+        function checkCondition(expression) {
+            return (expression) ? true : false;
+        }
+
+        function filterArray(array, checker) {
+            var resultArray =[];
+
+            for (i = 0; i < array.length; i++) {
+                if (checker) {
+                resultArray.push(array[i]);
+                } 
+            }
+
+            return resultArray;
+        }
+
+        var result = filterArray(arr, checkCondition(arr[i] > 2));
+        
+        console.log(result);
+
+
+        // map
+        // Тут вообще оставила с конкретным выражением, потому что все равно предыдущее не работает
+        
+        function mapArray(array) {
+            var resultArray =[];
+
+            for (var i = 0; i <= array.length; i++) {
+                resultArray.push(array[i] / 5);
+            }
+
+            return resultArray;
+        }
+
+        result = mapArray(arr);
+        
+        console.log(result);
+
+        // Группировка в объект
+        // Не могу понять, почему нулевой элемент не группируется =(
+
+        const notification = [
+            {
+                date: '31/07/2019',
+                msg: 'Some message here'
+            },
+            {
+                date: '31/07/2019',
+                msg: 'Some weird message here'
+            },
+            {
+                date: '2/08/2019',
+                msg: 'Some absurd message here'
+            },
+            {
+                date: '2/08/2019',
+                msg: 'Some witty message here'
+            }
+        ];
+
+        var messagesOnDates = notification.reduce(function(acc, message) {
+                if (!acc[message.date]) {
+                    acc[message.date] = [];
+                } 
+                acc[message.date].push(message.msg);
+                
+                return acc;
+                },                
+            );
+
+        console.log(messagesOnDates);
+
+    </script>
+</body>
+</html>
