@@ -11,50 +11,46 @@
         var arr = [5, 'orange', [2], 'hello', 43];
         
         // filter 
-        // не знаю, как корректно сообщить, что такое i =( То есть, я понимаю косяк, но не понимаю, как его исправить
         
-        var i;
-
-        function checkCondition(expression) {
-            return (expression) ? true : false;
-        }
-
-        function filterArray(array, checker) {
+        var filterArray = function(array, callback) {
             var resultArray =[];
 
             for (i = 0; i < array.length; i++) {
-                if (checker) {
-                resultArray.push(array[i]);
-                } 
+                var callbackResult = callback(array[i], i, array);
+                if (callbackResult) {
+                    resultArray.push(array[i]);
+                }
             }
 
             return resultArray;
         }
 
-        var result = filterArray(arr, checkCondition(arr[i] > 2));
+        var filterTest = filterArray(arr, function(el) {
+            return el > 2;
+        });
         
-        console.log(result);
-
+        console.log(filterTest);
 
         // map
-        // Тут вообще оставила с конкретным выражением, потому что все равно предыдущее не работает
-        
-        function mapArray(array) {
+
+        var map = function(array, callback) {
             var resultArray =[];
 
-            for (var i = 0; i <= array.length; i++) {
-                resultArray.push(array[i] / 5);
+            for (var i = 0; i < array.length; i++) {
+                var callbackResult = callback(array[i], i, array);
+                resultArray.push(callbackResult);
             }
 
             return resultArray;
         }
 
-        result = mapArray(arr);
-        
-        console.log(result);
+        var mapTest = map(arr, function(el) {
+            return el * 2;
+        })
+
+        console.log(mapTest);
 
         // Группировка в объект
-        // Не могу понять, почему нулевой элемент не группируется =(
 
         const notification = [
             {
@@ -72,18 +68,18 @@
             {
                 date: '2/08/2019',
                 msg: 'Some witty message here'
-            }
+            },
         ];
 
         var messagesOnDates = notification.reduce(function(acc, message) {
-                if (!acc[message.date]) {
-                    acc[message.date] = [];
-                } 
-                acc[message.date].push(message.msg);
+            if (!acc[message.date]) {
+                acc[message.date] = [];
+            } 
+            acc[message.date].push(message.msg);
                 
-                return acc;
-                },                
-            );
+            return acc;
+            }, {}
+        );
 
         console.log(messagesOnDates);
 
